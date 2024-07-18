@@ -1,4 +1,4 @@
-import {cart, addtocart} from '../data/cart.js';
+import {cart, addtocart, calculateCartQuantity} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
 
@@ -45,7 +45,7 @@ products.forEach((product) => {
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart js-added-to-cart-${product.id}">
             <img src="images/icons/checkmark.png">
             Added
           </div>
@@ -58,22 +58,47 @@ products.forEach((product) => {
   `;
 });
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
+const addedMessageTimeouts = {};
 
-function updateCartQuantity(){
-  let cartQuantity = 0;
+function updateCartQuantity(productId){
 
-    cart.forEach((cartItem)=>{
-      cartQuantity += cartItem.quantity;
-    });
-
+  let cartQuantity = 0; //this code has funtion that can be used later if required
+  cart.forEach((cartItem)=>{
+    cartQuantity += cartItem.quantity;
+  });
+  
+  if(cartQuantity === 0){
+    document.querySelector('.js-cart-quantity').innerHTML = '';
+  }
+  else{
     document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+  }
+
+  const addedMessage = document.querySelector(
+    `.js-added-to-cart-${productId}`
+  );
+  if (addedMessage) {
+    addedMessage.classList.add('added-to-cart-visible');
+
+    const previousTimeoutId = addedMessageTimeouts[productId];
+    if (previousTimeoutId) {
+      clearTimeout(previousTimeoutId);
+    }
+
+    const timeoutId = setTimeout(() => {
+      addedMessage.classList.remove('added-to-cart-visible');
+    }, 2000);
+    addedMessageTimeouts[productId] = timeoutId;
+  }
 }
+
+updateCartQuantity();
 
 document.querySelectorAll('.js-add-to-cart')
 .forEach((button) => {
   button.addEventListener('click', () => {
-    const productId = button.dataset.productId;
+    const {productId} = button.dataset;
     addtocart(productId);
-    updateCartQuantity();
+    updateCartQuantity(productId);
   });
 });
