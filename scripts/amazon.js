@@ -61,11 +61,7 @@ document.querySelector('.js-products-grid').innerHTML = productsHTML;
 const addedMessageTimeouts = {};
 
 function updateCartQuantity(productId){
-
-  let cartQuantity = 0; //this code has funtion that can be used later if required
-  cart.forEach((cartItem)=>{
-    cartQuantity += cartItem.quantity;
-  });
+  let cartQuantity = calculateCartQuantity();
   
   if(cartQuantity === 0){
     document.querySelector('.js-cart-quantity').innerHTML = '';
