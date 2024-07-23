@@ -1,4 +1,4 @@
-import {cart, calculateCartQuantity} from '../../data/cart.js';
+import {cart, calculateCartQuantity, resetCart} from '../../data/cart.js';
 import { getProduct } from '../../data/products.js';
 import {getDeliveryOption} from '../../data/deliveryOptions.js';
 import {formatCurrency} from '../utils/money.js';
@@ -33,27 +33,27 @@ export function renderPaymentSummary() {
 
     <div class="payment-summary-row">
       <div>Items (${cartQuantity}):</div>
-      <div class="payment-summary-money">$${formatCurrency(productPriceCents)}</div>
+      <div class="payment-summary-money">&#8377;${formatCurrency(productPriceCents)}</div>
     </div>
 
     <div class="payment-summary-row">
       <div>Shipping &amp; handling:</div>
-      <div class="payment-summary-money">$${formatCurrency(ShippingPriceCents)}</div>
+      <div class="payment-summary-money">&#8377;${formatCurrency(ShippingPriceCents)}</div>
     </div>
 
     <div class="payment-summary-row subtotal-row">
       <div>Total before tax:</div>
-      <div class="payment-summary-money">$${formatCurrency(totalBeforeTaxCents)}</div>
+      <div class="payment-summary-money">&#8377;${formatCurrency(totalBeforeTaxCents)}</div>
     </div>
 
     <div class="payment-summary-row">
       <div>Estimated tax (10%):</div>
-      <div class="payment-summary-money">$${formatCurrency(taxCents)}</div>
+      <div class="payment-summary-money">&#8377;${formatCurrency(taxCents)}</div>
     </div>
 
     <div class="payment-summary-row total-row">
       <div>Order total:</div>
-      <div class="payment-summary-money">$${formatCurrency(totalCents)}</div>
+      <div class="payment-summary-money">&#8377;${formatCurrency(totalCents)}</div>
     </div>
 
     <button class="place-order-button button-primary js-place-order">
@@ -63,10 +63,24 @@ export function renderPaymentSummary() {
   document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHTML;
 
   document.querySelector('.js-place-order')
-    .addEventListener('click', () => {
-      // const cartItems = JSON.stringify(cart);
-      // const orderTotal = totalCents;
-      // addOrder(cartItems); //change the parameter
+    .addEventListener('click', async () => {
+      try {
+        const response = await fetch('https://supersimplebackend.dev/orders', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            cart: cart
+          })
+        });
+        const order = await response.json();
+        addOrder(order);
+      } 
+      catch(error) {
+        console.log('unexpected error. Try agian later');
+      }
+      resetCart();
       window.location.href = 'orders.html';
     });
 }
