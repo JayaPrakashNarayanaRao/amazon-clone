@@ -4,19 +4,17 @@ import {loadProducts, loadProductsFetch} from "../data/products.js";
 import {loadCart, loadCartFetch} from "../data/cart.js";
 
 async function loadPage() {
-  try
-  {
+  try {
     await loadProductsFetch();
-    await loadCartFetch();
-    await Promise.all([
-      loadProductsFetch(),
-      loadCartFetch()
-    ]);
-  } 
-  catch(error) {
+    const cart = await loadCartFetch();
+    if (cart.length === 0) {
+      document.getElementById("checkout-container").innerHTML = "<p>No Products Yet.</p>";
+    } else {
+      renderOrderSummary();
+      renderPaymentSummary();
+    }
+  } catch (error) {
     console.log(error);
   }
-  renderOrderSummary();
-  renderPaymentSummary();
 }
 loadPage();
