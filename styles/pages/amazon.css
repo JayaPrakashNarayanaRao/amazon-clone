@@ -147,3 +147,15 @@
 .extraInfo:hover {
   color: red;
 }
+
+.no-results-found {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  font-weight: bold;
+  color: #999;
+  text-align: center;
+  padding: 20px;
+}
