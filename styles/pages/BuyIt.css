@@ -5,6 +5,7 @@
 .products-grid {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
+  background-color: #F7F7F7;
 }
 
 @media (max-width: 2000px) {
@@ -129,6 +130,8 @@
   width: 100%;
   padding: 8px;
   border-radius: 50px;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 .added-to-cart-visible {
@@ -145,7 +148,7 @@
 }
 
 .extraInfo:hover {
-  color: red;
+  color: rgb(149, 0, 255);
 }
 
 .no-results-found {

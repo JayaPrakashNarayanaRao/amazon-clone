@@ -2,11 +2,9 @@
   height: 60px;
   padding-left: 30px;
   padding-right: 30px;
-  background-color: white;
-
+  background-color: #5C00CA;
   display: flex;
   justify-content: center;
-
   position: fixed;
   top: 0;
   left: 0;
@@ -26,29 +24,30 @@
   width: 150px;
 }
 
-.amazon-logo {
-  width: 100px;
+.BuyIt-logo {
+  width: 180px;
   margin-top: 12px;
 }
 
-.amazon-mobile-logo {
+.BuyIt-logo:hover {
+  transform: scale(0.9);
+  transition: transform 0.2s ease-in-out;
+}
+
+.BuyIt-mobile-logo {
   display: none;
 }
 
-/* @media is used to create responsive design (making the
-   website look good on any screen size). This @media
-   means when the screen width is 575px or less, different
-   styles (inside the {...}) will be applied. */
 @media (max-width: 575px) {
   .checkout-header-left-section {
     width: auto;
   }
 
-  .amazon-logo {
+  .BuyIt-logo {
     display: none;
   }
 
-  .amazon-mobile-logo {
+  .BuyIt-mobile-logo {
     display: inline-block;
     height: 35px;
     margin-top: 5px;
@@ -59,7 +58,7 @@
   flex: 1;
   flex-shrink: 0;
   text-align: center;
-
+  color: white;
   font-size: 25px;
   font-weight: 500;
 
@@ -68,7 +67,7 @@
 }
 
 .return-to-home-link {
-  color: rgb(0, 113, 133);
+  color: lightblue;
   font-size: 23px;
   text-decoration: none;
   cursor: pointer;
