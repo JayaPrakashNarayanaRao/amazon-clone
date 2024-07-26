@@ -3,11 +3,9 @@
   color: white;
   padding-left: 15px;
   padding-right: 35px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   position: fixed;
   top: 0;
   left: 0;
@@ -148,3 +146,4 @@
   width: 26px;
   text-align: center;
 }
+
